@@ -28,34 +28,43 @@
             <label for="search" class="fs-2 my-1 search">Search for a City:</label>
             <input type="text" class="form-control form-control-md my-1 search" id="search" name="search"
                 placeholder="Search and view history">
-            <input type="submit" class="form-control form-control-md my-1 search" name="search" id="search" value="submit">
+            <input type="submit" class="form-control form-control-md my-1 search" name="search" id="search"
+                value="Search">
         </form>
         <section class="d-flex flex-column justify-content-center align-items-center mt-1">
             <h2>Current Weather</h2>
             <div class="container-fluid">
-                <div class="row flex-nowrap align-items-center my-1">
+                <div class="row flex-nowrap align-items-start">
                     <div class="col-11 d-flex fs-3 my-1 align-items-center">
                         <i class="fa-solid fa-location-arrow fs-6 text-center mb-2 mx-1"></i>
                         <p class="fs-4">London (GB)</p>
                     </div>
-                    <div class="col-1 mb-4">
+                    <div class="col mb-4">
                         <i class="fa-solid fa-rotate"></i>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">2</div>
-                    <div class="col">2</div>
-                    <div class="col">2</div>
-                    <div class="col">2</div>
+                <div class="row fs-4 d-flex">
+                    <div class="col d-flex flex-column justify-content-center align-items-center">
+                        <p>
+                            <i class="fa-solid fa-temperature-three-quarters"></i>
+                            4 &#8451
+                        </p>
+                        <p>
+                            <i class="fa-solid fa-droplet"></i>
+                            90 %
+                        </p>
+                        <p>
+                            <i class="fa-solid fa-wind"></i>
+                            7 mph
+                        </p>
+                    </div>
+                    <div class="col d-flex flex-column align-items-end">
+                        <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="test icon">
+                        <p class="text-nowrap fs-6"> 17th Dec 22</p>
+                    </div>
+
                 </div>
-                <div class="row justify-content-between py-3">
-                    <p class="col-5">
-                        <i class="fa-solid fa-wind"></i>
-                        7 mph
-                    </p>
-                    <div class="col-2"></div>
-                    <p class="col-5 text-nowrap"> 17th Dec 22</p>
-                </div>
+            </div>
             </div>
         </section>
     </main>
