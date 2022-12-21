@@ -21,6 +21,27 @@ i {
     text-overflow: ellipsis;
     text-align: center;
 }
+
 #search:last-child {
     width: 70%;
 }
+
+img {
+    max-width: 100% !important;
+    object-fit: cover;
+}
+
+.fiveDayForecast {
+    max-width: 400px;
+    width: 100%;
+}
+
+.carousel .slide {
+    width: 80px !important;
+}
+
+.square {
+    background-color: yellowgreen;
+    border-radius: 0.2em;
+}
+
