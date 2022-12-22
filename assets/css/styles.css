@@ -66,3 +66,7 @@ i {
     left: 0%;
     transform: translateX();
 }
+
+img {
+    width: 80%;
+}
