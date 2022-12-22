@@ -44,6 +44,10 @@ img {
     width: 80px !important;
 }
 
+i {
+    color: yellowgreen;
+}
+
 .square {
     background-color: yellowgreen;
     border-radius: 0.2em;
