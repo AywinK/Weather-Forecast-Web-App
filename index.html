@@ -31,17 +31,15 @@
             <input type="submit" class="form-control form-control-md my-1 search" name="search" id="search"
                 value="Search">
         </form>
-        <section class="d-flex flex-column justify-content-center align-items-center mt-1">
-            <h2>Current Weather</h2>
+        <section class="d-flex flex-column justify-content-center align-items-center mt-1" id="currentWeather">
+            <!-- <h2>Current Weather</h2> -->
             <div class="container-fluid">
-                <div class="row flex-nowrap align-items-start">
-                    <div class="col-11 d-flex fs-3 my-1 align-items-center">
+                <div class="row flex-nowrap">
+                    <div class="col-10 d-flex fs-3 my-1 align-items-center">
                         <i class="fa-solid fa-location-arrow fs-6 text-center mb-2 mx-1"></i>
                         <p class="fs-4">London (GB)</p>
                     </div>
-                    <div class="col mb-4">
-                        <i class="fa-solid fa-rotate"></i>
-                    </div>
+                    <i class="fa-solid fa-rotate col mt-2 p-1"></i>
                 </div>
                 <div class="row fs-4 d-flex">
                     <div class="col d-flex flex-column justify-content-center align-items-center">
@@ -67,7 +65,7 @@
             </div>
             </div>
         </section>
-        <section class="container-fluid fiveDayForecast">
+        <section class="container-fluid fiveDayForecast my-3 pt-3">
             <div class="d-flex justify-content-between">
                 <button class="btn btn-dark btn-sm active">Today</button>
                 <button class="btn btn-dark btn-sm">Mon</button>
@@ -76,7 +74,9 @@
                 <button class="btn btn-dark btn-sm">Thu</button>
                 <button class="btn btn-dark btn-sm">Fri</button>
             </div>
-            <div class="carousel d-flex justify-content-center text-center">
+            <div class="carousel d-flex justify-content-center text-center overflow-hidden">
+
+                <div class="slide-container d-flex">
                 <div class="slide d-flex flex-column justify-content-center align-items-center my-3">
                     <h4>0:00</h4>
                     <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="test icon">
@@ -109,8 +109,45 @@
                         <p class="fs-5">90%</p>
                     </div>
                 </div>
-                
-            </div> <!-- carousel end closing tag-->
+                <div class="slide d-flex flex-column justify-content-center align-items-center my-3">
+                    <h4>0:00</h4>
+                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="test icon">
+                    <div class="container">
+                        <p class="square mx-2 fs-4">11&#176</p>
+                        <p class="fs-5">90%</p>
+                    </div>
+                </div>
+                <div class="slide d-flex flex-column justify-content-center align-items-center my-3">
+                    <h4>0:00</h4>
+                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="test icon">
+                    <div class="container">
+                        <p class="square mx-2 fs-4">11&#176</p>
+                        <p class="fs-5">90%</p>
+                    </div>
+                </div>
+                <div class="slide d-flex flex-column justify-content-center align-items-center my-3">
+                    <h4>0:00</h4>
+                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="test icon">
+                    <div class="container">
+                        <p class="square mx-2 fs-4">11&#176</p>
+                        <p class="fs-5">90%</p>
+                    </div>
+                </div>
+                <div class="slide d-flex flex-column justify-content-center align-items-center my-3">
+                    <h4>0:00</h4>
+                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="test icon">
+                    <div class="container">
+                        <p class="square mx-2 fs-4">11&#176</p>
+                        <p class="fs-5">90%</p>
+                    </div>
+
+                </div>
+                </div> <!-- carousel end closing tag-->
+
+                <div class="container">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
         </section>
     </main>
 
