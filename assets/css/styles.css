@@ -1,7 +1,9 @@
 /* test */
 body {
     background-color: rgb(17, 16, 16) !important;
-    max-width: 1000px;
+    color: white;
+    /* background-color: white !important; */
+    /* max-width: 1000px; */
 }
 
 button {
@@ -36,7 +38,7 @@ img {
 }
 
 .fiveDayForecast {
-    /* max-width: 350px; */
+    max-width: 800px;
     width: 100%;
 }
 
@@ -54,12 +56,8 @@ i {
 }
 
 #currentWeather, .fiveDayForecast {
-    background-color: rgba(22, 22, 22, 0.3);
+    background-color: rgba(22, 22, 22, 0.4);
     border-radius: 0.35em;
-}
-
-section:nth-child(3) .carousel {
-    /* position: relative; */
 }
 
 .slide-container {
