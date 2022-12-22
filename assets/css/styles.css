@@ -31,8 +31,12 @@ img {
     object-fit: cover;
 }
 
+#currentWeather {
+    max-width: 400px;
+}
+
 .fiveDayForecast {
-    max-width: 350px;
+    /* max-width: 350px; */
     width: 100%;
 }
 
