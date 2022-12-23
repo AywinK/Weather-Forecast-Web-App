@@ -1,7 +1,7 @@
 /* test */
 body {
-    background-color: rgb(17, 16, 16) !important;
-    color: white;
+    background-color: #343434 !important;
+    color: #d6d6d6;
     /* background-color: white !important; */
     /* max-width: 1000px; */
 }
@@ -10,36 +10,46 @@ button {
     border: none;
     background: none;
 }
+
+input[type=text] {
+    border-width: 3px !important;
+}
+
+input[type=text]:focus {
+    border-color: yellowgreen !important;
+    border-width: 3px !important;
+}
+
 i {
     /* font-size: 3em; */
 }
 
-#searchContainer {
+.searchContainer {
     max-width: 400px;
-    width: 100%;
+    /* width: 100%; */
 }
 
-#search::placeholder {
-    text-overflow: ellipsis;
+.search::placeholder {
+    /* text-overflow: ellipsis; */
     text-align: center;
 }
 
-#search:last-child {
+.search:last-child {
     width: 70%;
 }
 
 img {
-    max-width: 100% !important;
-    object-fit: cover;
+    /* max-width: 100% !important; */
+    /* object-fit: cover; */
 }
 
-#currentWeather {
+.currentWeather {
     max-width: 400px;
 }
 
 .fiveDayForecast {
     max-width: 800px;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .carousel .slide {
@@ -53,8 +63,8 @@ i {
 .square {
     background-color: yellowgreen;
     border-radius: 0.2em;
-    width: 3ch;
-    height: 3ch;
+    width: 4ch;
+    height: 4ch;
     /* aspect-ratio: 1/1; */
 }
 
@@ -63,12 +73,12 @@ i {
     border-radius: 0.35em; */
 }
 
-.slide-container {
+/* .slide-container {
     position: relative;
     top: 0%;
     left: 0%;
     transform: translateX();
-}
+} */
 
 img {
     width: 80%;

@@ -88,7 +88,9 @@ function generateCurrent(currentDataObj, cityObj, iconURL) {
             <i class="fa-solid fa-location-arrow fs-6 text-center mb-2 mx-1"></i>
             <p id="currentCity">${cityObj.city} (${currentDataObj.sys.country})</p>
         </div>
-        <i class="fa-solid fa-rotate col mt-2 p-1" id="refreshBtn"></i>
+        <button class="col mt-2 p-1">
+        <i class="fa-solid fa-rotate" id="refreshBtn"></i>
+        </button>
     </div>
     <div class="row d-flex">
         <div class="col d-flex flex-column justify-content-center align-items-center">
@@ -134,7 +136,7 @@ function generateCarousel(forecastDataObj, iconURL) {
             <h4>${moment.unix(forecastObj.dt).format("DD/MM[\n]HH:mm")}</h4>
             <img src="${iconURL + forecastObj.weather[0].icon}.png" alt="${forecastObj.weather[0].description}">
             <div class="container">
-                <p class="square fs-4">${Math.round(forecastObj.main.temp)}&#176</p>
+                <p class="square p-2 fs-4">${Math.round(forecastObj.main.temp)}&#176</p>
                 <p class="fs-5">${forecastObj.main.humidity}%</p>
             </div>
         </div>
