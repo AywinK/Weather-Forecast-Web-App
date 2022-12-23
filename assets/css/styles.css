@@ -1,9 +1,11 @@
-/* test */
+/* colours are yellowgreen, jet and light gray */
+
+
+
 body {
     background-color: #343434 !important;
     color: #d6d6d6;
-    /* background-color: white !important; */
-    /* max-width: 1000px; */
+
 }
 
 button {
@@ -20,36 +22,29 @@ input[type=text]:focus {
     border-width: 3px !important;
 }
 
-i {
-    /* font-size: 3em; */
-}
-
-.searchContainer {
+.searchContainer, .currentWeather {
     max-width: 400px;
     /* width: 100%; */
 }
 
 .search::placeholder {
-    /* text-overflow: ellipsis; */
     text-align: center;
+    color: #343434;
 }
 
 .search:last-child {
     width: 70%;
 }
 
-img {
-    /* max-width: 100% !important; */
-    /* object-fit: cover; */
-}
-
-.currentWeather {
-    max-width: 400px;
-}
-
 .fiveDayForecast {
     max-width: 800px;
-    /* width: 100%; */
+}
+
+.customBorder {
+    border: solid yellowgreen;
+    border-radius: 10px;
+    border-width: 1px;
+    background-image: linear-gradient(45deg, rgba(214,214,214,0.3),rgb(52,52,52));
 }
 
 .carousel .slide {
@@ -62,28 +57,13 @@ i {
 
 .square {
     background-color: yellowgreen;
+    text-shadow: 2px 2px 5px #343434;
     border-radius: 0.2em;
     width: 4ch;
     height: 4ch;
     /* aspect-ratio: 1/1; */
 }
 
-#currentWeather, .fiveDayForecast {
-    /* background-color: rgba(22, 22, 22, 0.4);
-    border-radius: 0.35em; */
-}
-
-/* .slide-container {
-    position: relative;
-    top: 0%;
-    left: 0%;
-    transform: translateX();
-} */
-
 img {
     width: 80%;
 }
-
-/* .slide h4 {
-    white-space: pre;
-} */
