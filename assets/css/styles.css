@@ -69,6 +69,6 @@ img {
     width: 80%;
 }
 
-#prev {
-    z-index: 10000000000;
+#prev, #next {
+    cursor: pointer;
 }

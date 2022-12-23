@@ -150,13 +150,19 @@ function generateCarousel(forecastDataObj, iconURL) {
 
     $("#prev").click(function () {
         console.log("prev clicked");
-        $(".carousel").animate({"right": "-=100%"},"fast");
+        $(".carousel").animate({"right": "-=400px"},"fast");
         var right = $(".carousel").css("right");
         console.log(right);
+        var width = $(".carousel").css("width");
+        console.log(`width: ${width}`);
     });
     $("#next").click(function () {
         console.log("next clicked");
-        $(".carousel").animate({"right": "+=100%"},"fast");
+        $(".carousel").animate({"right": "+=400px"},"fast");
+        var right = $(".carousel").css("right");
+        console.log(right);
+        var width = $(".carousel").css("width");
+        console.log(`width: ${$(".carousel").css("width")}`);
     });
 };
 
@@ -170,7 +176,7 @@ function savesHistory(arr) {
 
 function addsToHistory(currentDataObj) {
     var citiesUserData = getsHistory();
-    var newValidInput = currentDataObj.name + " ," + currentDataObj.sys.country;
+    var newValidInput = currentDataObj.name + ", " + currentDataObj.sys.country;
     if (!citiesUserData.includes(newValidInput)) {
         citiesUserData.push(newValidInput);
         savesHistory(citiesUserData);
@@ -185,12 +191,12 @@ $("#search[type=text]").autocomplete({
 
 }, {
     minLength: 0,
-    delay: 0,
-    open: function (event, ui) {
-        this.source = getsHistory();
-    }
+    delay: 0
 });
 
 $("#search[type=text]").focus(function () {
     $("#search[type=text]").autocomplete( "search", "" );
 });
+
+// maxRight = (21*slide)-carousel/2;
+// maxLeft = (-19*slide)+carousel/2;
