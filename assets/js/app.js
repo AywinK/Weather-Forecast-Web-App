@@ -53,12 +53,12 @@ function getAPIData(cityObj) {
 
     function getForecast(currentDataObj) {
         $.get(forecastURL + `&lat=${currentDataObj.coord.lat}&lon=${currentDataObj.coord.lon}`)
-        .then(function (forecastDataObj) {
-            console.log(forecastDataObj);
-            if (forecastDataObj) {
-
-            }
-        })
+            .then(function (forecastDataObj) {
+                console.log(forecastDataObj);
+                if (forecastDataObj) {
+                    generateCarousel(forecastDataObj, iconURL);
+                }
+            })
     };
 };
 
@@ -111,5 +111,38 @@ function generateCurrent(currentDataObj, cityObj, iconURL) {
         </div>
     </div>
 </div>`;
-currentSection.html(currentHTML);
+    currentSection.html(currentHTML);
 }
+
+function generateCarousel(forecastDataObj, iconURL) {
+    var forecastSection = $("#fiveDayForecast")
+    var carouselHTML = `            
+    <div class="carousel d-flex justify-content-center text-center overflow-hidden" id="carousel">
+    </div> <!-- carousel end closing tag-->
+
+    <div class="d-flex justify-content-center fs-1 mb-2 text-center">
+        <i class="fa-solid fa-circle-chevron-left mx-5" id="prev"></i>
+        <i class="fa-solid fa-circle-chevron-right mx-5" id="next"></i>
+    </div>
+    `
+    forecastSection.html(carouselHTML);
+
+    function generateSlide(forecastObj) {
+        var carouselEl = $("#carousel");
+        var slideHTML =`
+        <div class="slide d-flex flex-column justify-content-center align-items-center my-3">
+            <h4>${moment.unix(forecastObj.dt).format("DD/MM[\n]HH:mm")}</h4>
+            <img src="${iconURL + forecastObj.weather[0].icon}.png" alt="${forecastObj.weather[0].description}">
+            <div class="container">
+                <p class="square fs-4">${Math.round(forecastObj.main.temp)}&#176</p>
+                <p class="fs-5">${forecastObj.main.humidity}%</p>
+            </div>
+        </div>
+        `
+        carouselEl.append(slideHTML);
+    };
+
+    for (var forecastObj of forecastDataObj.list) {
+        generateSlide(forecastObj)
+    }
+};
