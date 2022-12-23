@@ -49,6 +49,7 @@ input[type=text]:focus {
 
 .carousel .slide {
     width: 80px !important;
+    transform: translate(80px);
 }
 
 i {
@@ -66,4 +67,8 @@ i {
 
 img {
     width: 80%;
+}
+
+#prev {
+    z-index: 10000000000;
 }
