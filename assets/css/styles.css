@@ -53,11 +53,14 @@ i {
 .square {
     background-color: yellowgreen;
     border-radius: 0.2em;
+    width: 3ch;
+    height: 3ch;
+    /* aspect-ratio: 1/1; */
 }
 
 #currentWeather, .fiveDayForecast {
-    background-color: rgba(22, 22, 22, 0.4);
-    border-radius: 0.35em;
+    /* background-color: rgba(22, 22, 22, 0.4);
+    border-radius: 0.35em; */
 }
 
 .slide-container {
@@ -70,3 +73,7 @@ i {
 img {
     width: 80%;
 }
+
+/* .slide h4 {
+    white-space: pre;
+} */
