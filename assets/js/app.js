@@ -6,9 +6,14 @@ submitBtn.submit(getsSearchVal);
 
 function getsSearchVal(e) {
     e.preventDefault();
-    var cityVal = $("input").first().val();
-    console.log(cityVal)
-    getAPIData(getCityInput(cityVal));
+    var userInput = $("input[type=text]");
+    var cityVal = userInput.val();
+    console.log(cityVal);
+    userInput.val(``);
+    if (cityVal) {
+        getAPIData(getCityInput(cityVal));
+    };
+
 };
 
 // filter out city and country
@@ -16,8 +21,16 @@ function getsSearchVal(e) {
 function getCityInput(cityVal) {
     var cityArr = cityVal.split(",");
     console.log(cityArr);
-    if (!cityArr[1]) {
-        cityArr[1] = "gb";
+    // if (!cityArr[1]) {
+    //     cityArr[1] = "gb";
+    // }
+
+    function includesCountry(country) {
+        if (country) {
+            return country.trim();
+        } else if (!country) {
+            return ""
+        }
     }
 
     function capitaliseCity(city) {
@@ -26,7 +39,7 @@ function getCityInput(cityVal) {
 
     var cityObj = {
         city: capitaliseCity(cityArr[0].trim()),
-        country: cityArr[1].trim().toUpperCase(),
+        country: includesCountry(cityArr[1])
     }
 
     return cityObj
@@ -39,13 +52,14 @@ function getAPIData(cityObj) {
     var iconURL = "https://openweathermap.org/img/w/";
     var cityObj = cityObj;
 
-    var currentDataObj = (function inputsubmitted() {
+    (function inputsubmitted() {
         $.get(currentURL + `&q=${cityObj.city},${cityObj.country}`)
             .then(function (currentDataObj) {
                 console.log(currentDataObj);
                 if (currentDataObj) {
                     generateCurrent(currentDataObj, cityObj, iconURL);
                     // call function to add to history here
+                    addsToHistory(currentDataObj);
                     getForecast(currentDataObj);
                 }
             })
@@ -63,22 +77,6 @@ function getAPIData(cityObj) {
 };
 
 function generateCurrent(currentDataObj, cityObj, iconURL) {
-    // var currentCity = $("#currentCity");
-    // var currentTemp = $("#currentTemp");
-    // var currentHumidity = $("#currentHumidity");
-    // var currentWind = $("#currentWind");
-    // var currentIcon = $("#currentIcon");
-    // var currentDate = $("#currentDate");
-
-    // currentCity.text(cityObj.city + ` (${currentDataObj.sys.country})`);
-    // currentTemp.text(Math.round(currentDataObj.main.temp));
-    // currentHumidity.text(currentDataObj.main.humidity);
-    // currentWind.text(Math.round(currentDataObj.wind.speed));
-    // currentIcon.attr({
-    //     "src": iconURL + `${currentDataObj.weather[0].icon}.png`,
-    //     "alt": `${currentDataObj.weather[0].description}`
-    // })
-    // currentDate.text(moment().format("Do MMM YY"))
 
     var currentSection = $("#currentWeather")
 
@@ -86,7 +84,7 @@ function generateCurrent(currentDataObj, cityObj, iconURL) {
     <div class="row">
         <div class="col-10 d-flex my-1 align-items-center">
             <i class="fa-solid fa-location-arrow fs-6 text-center mb-2 mx-1"></i>
-            <p id="currentCity">${cityObj.city} (${currentDataObj.sys.country})</p>
+            <p id="currentCity">${currentDataObj.name} (${currentDataObj.sys.country})</p>
         </div>
         <button class="col mt-2 p-1">
         <i class="fa-solid fa-rotate" id="refreshBtn"></i>
@@ -114,29 +112,34 @@ function generateCurrent(currentDataObj, cityObj, iconURL) {
     </div>
 </div>`;
     currentSection.html(currentHTML);
+    currentSection.addClass("customBorder")
 }
 
 function generateCarousel(forecastDataObj, iconURL) {
     var forecastSection = $("#fiveDayForecast")
     var carouselHTML = `            
-    <div class="carousel d-flex justify-content-center text-center overflow-hidden" id="carousel">
+    <div class="carousel d-flex justify-content-center text-center overflow-hidden mb-2" id="carousel">
     </div> <!-- carousel end closing tag-->
 
     <div class="d-flex justify-content-center fs-1 mb-2 text-center">
-        <i class="fa-solid fa-circle-chevron-left mx-5" id="prev"></i>
-        <i class="fa-solid fa-circle-chevron-right mx-5" id="next"></i>
+        <button id="prev">
+            <i class="fa-solid fa-circle-chevron-left mx-5"></i>
+        </button>
+        <button id="next">
+            <i class="fa-solid fa-circle-chevron-right mx-5"></i>
+        </button>
     </div>
     `
     forecastSection.html(carouselHTML);
 
     function generateSlide(forecastObj) {
         var carouselEl = $("#carousel");
-        var slideHTML =`
+        var slideHTML = `
         <div class="slide d-flex flex-column justify-content-center align-items-center my-3">
-            <h4>${moment.unix(forecastObj.dt).format("DD/MM[\n]HH:mm")}</h4>
+            <p>${moment.unix(forecastObj.dt).format("DD/MM[\n]HH:mm")}</p>
             <img src="${iconURL + forecastObj.weather[0].icon}.png" alt="${forecastObj.weather[0].description}">
             <div class="container">
-                <p class="square p-2 fs-4">${Math.round(forecastObj.main.temp)}&#176</p>
+                <p class="square py-2 fs-4">${Math.round(forecastObj.main.temp)}&#176</p>
                 <p class="fs-5">${forecastObj.main.humidity}%</p>
             </div>
         </div>
@@ -147,4 +150,36 @@ function generateCarousel(forecastDataObj, iconURL) {
     for (var forecastObj of forecastDataObj.list) {
         generateSlide(forecastObj)
     }
+    forecastSection.addClass("customBorder")
 };
+
+function getsHistory() {
+    return JSON.parse(localStorage.getItem("citiesUserData")) || [];
+};
+
+function savesHistory(arr) {
+    localStorage.setItem("citiesUserData", JSON.stringify(arr));
+};
+
+function addsToHistory(currentDataObj) {
+    var citiesUserData = getsHistory();
+    var newValidInput = currentDataObj.name + " ," + currentDataObj.sys.country;
+    if (!citiesUserData.includes(newValidInput)) {
+        citiesUserData.push(newValidInput);
+        savesHistory(citiesUserData);
+        $("#search[type=text]").autocomplete({
+            source: getsHistory(),
+        });
+    }
+};
+
+$("#search[type=text]").autocomplete({
+    source: getsHistory(),
+
+}, {
+    minLength: 0,
+    delay: 0,
+    open: function (event, ui) {
+        this.source = getsHistory();
+    }
+});
