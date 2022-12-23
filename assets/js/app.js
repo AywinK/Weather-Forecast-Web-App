@@ -118,16 +118,12 @@ function generateCurrent(currentDataObj, cityObj, iconURL) {
 function generateCarousel(forecastDataObj, iconURL) {
     var forecastSection = $("#fiveDayForecast")
     var carouselHTML = `            
-    <div class="carousel d-flex justify-content-center text-center overflow-hidden mb-2" id="carousel">
+    <div class="carousel d-flex justify-content-center text-center overflow-hiddden mb-2" id="carousel">
     </div> <!-- carousel end closing tag-->
 
     <div class="d-flex justify-content-center fs-1 mb-2 text-center">
-        <button id="prev">
-            <i class="fa-solid fa-circle-chevron-left mx-5"></i>
-        </button>
-        <button id="next">
-            <i class="fa-solid fa-circle-chevron-right mx-5"></i>
-        </button>
+        <i class="fa-solid fa-circle-chevron-left mx-5" id="prev"></i>
+        <i class="fa-solid fa-circle-chevron-right mx-5" id="next"></i>
     </div>
     `
     forecastSection.html(carouselHTML);
@@ -148,9 +144,20 @@ function generateCarousel(forecastDataObj, iconURL) {
     };
 
     for (var forecastObj of forecastDataObj.list) {
-        generateSlide(forecastObj)
-    }
-    forecastSection.addClass("customBorder")
+        generateSlide(forecastObj);
+    };
+    forecastSection.addClass("customBorder");
+
+    $("#prev").click(function () {
+        console.log("prev clicked");
+        $(".carousel").animate({"right": "-=100%"},"fast");
+        var right = $(".carousel").css("right");
+        console.log(right);
+    });
+    $("#next").click(function () {
+        console.log("next clicked");
+        $(".carousel").animate({"right": "+=100%"},"fast");
+    });
 };
 
 function getsHistory() {
