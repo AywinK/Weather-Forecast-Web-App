@@ -18,14 +18,14 @@
     <header class="d-flex justify-content-between p-0 align-items-center mx-auto my-2">
         <i class="fa-solid fa-cloud-moon px-3 fs-1"></i>
         <h1 class="text-center"> Weather Forecast</h1>
-        <button class="px-3">
+        <button class="px-3" id="infoBtn">
             <i class="fa-solid fa-gear fs-1"></i>
         </button>
     </header>
 
     <main class="container">
         <div class="row justify-content-center">
-            <form class="col-12 col-md-6 d-flex flex-column p-2 align-items-center text-center" id="searchContainer">
+            <form class="col-12 col-md-6 d-flex flex-column p-2 align-items-center text-center searchContainer" id="searchContainer">
                 <label for="search" class="fs-2 my-1 search">Search for a City:</label>
                 <input type="text" class="form-control form-control-md my-1 search" id="search" name="search"
                     placeholder="Search and view history" autocomplete="off">
@@ -33,7 +33,7 @@
                     value="Search">
             </form>
 
-            <section class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center mt-1 fs-4"
+            <section class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center mt-1 fs-4 currentWeather"
                 id="currentWeather"></section>
 
         <section class="col-12 container-fluid fiveDayForecast my-3 pt-3"  id="fiveDayForecast">
