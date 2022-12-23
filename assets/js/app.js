@@ -8,9 +8,12 @@ function getsSearchVal(e) {
     e.preventDefault();
     var userInput = $("input[type=text]");
     var cityVal = userInput.val();
-    console.log(cityVal)
-    getAPIData(getCityInput(cityVal));
+    console.log(cityVal);
     userInput.val(``);
+    if (cityVal) {
+        getAPIData(getCityInput(cityVal));
+    };
+
 };
 
 // filter out city and country
@@ -56,6 +59,7 @@ function getAPIData(cityObj) {
                 if (currentDataObj) {
                     generateCurrent(currentDataObj, cityObj, iconURL);
                     // call function to add to history here
+                    addsToHistory(currentDataObj);
                     getForecast(currentDataObj);
                 }
             })
@@ -80,7 +84,7 @@ function generateCurrent(currentDataObj, cityObj, iconURL) {
     <div class="row">
         <div class="col-10 d-flex my-1 align-items-center">
             <i class="fa-solid fa-location-arrow fs-6 text-center mb-2 mx-1"></i>
-            <p id="currentCity">${cityObj.city} (${currentDataObj.sys.country})</p>
+            <p id="currentCity">${currentDataObj.name} (${currentDataObj.sys.country})</p>
         </div>
         <button class="col mt-2 p-1">
         <i class="fa-solid fa-rotate" id="refreshBtn"></i>
@@ -118,8 +122,12 @@ function generateCarousel(forecastDataObj, iconURL) {
     </div> <!-- carousel end closing tag-->
 
     <div class="d-flex justify-content-center fs-1 mb-2 text-center">
-        <i class="fa-solid fa-circle-chevron-left mx-5" id="prev"></i>
-        <i class="fa-solid fa-circle-chevron-right mx-5" id="next"></i>
+        <button id="prev">
+            <i class="fa-solid fa-circle-chevron-left mx-5"></i>
+        </button>
+        <button id="next">
+            <i class="fa-solid fa-circle-chevron-right mx-5"></i>
+        </button>
     </div>
     `
     forecastSection.html(carouselHTML);
@@ -144,3 +152,34 @@ function generateCarousel(forecastDataObj, iconURL) {
     }
     forecastSection.addClass("customBorder")
 };
+
+function getsHistory() {
+    return JSON.parse(localStorage.getItem("citiesUserData")) || [];
+};
+
+function savesHistory(arr) {
+    localStorage.setItem("citiesUserData", JSON.stringify(arr));
+};
+
+function addsToHistory(currentDataObj) {
+    var citiesUserData = getsHistory();
+    var newValidInput = currentDataObj.name + " ," + currentDataObj.sys.country;
+    if (!citiesUserData.includes(newValidInput)) {
+        citiesUserData.push(newValidInput);
+        savesHistory(citiesUserData);
+        $("#search[type=text]").autocomplete({
+            source: getsHistory(),
+        });
+    }
+};
+
+$("#search[type=text]").autocomplete({
+    source: getsHistory(),
+
+}, {
+    minLength: 0,
+    delay: 0,
+    open: function (event, ui) {
+        this.source = getsHistory();
+    }
+});
