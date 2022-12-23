@@ -183,3 +183,7 @@ $("#search[type=text]").autocomplete({
         this.source = getsHistory();
     }
 });
+
+$("#search[type=text]").focus(function () {
+    $("#search[type=text]").autocomplete( "search", "" );
+});
