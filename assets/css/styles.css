@@ -93,3 +93,7 @@ img {
 #clearBtn:active {
     transform: scale(0.9);
 }
+
+.hidden {
+    visibility: hidden;
+}
