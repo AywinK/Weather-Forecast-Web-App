@@ -25,21 +25,21 @@ function getCityInput(cityVal) {
     //     cityArr[1] = "gb";
     // }
 
-    function includesCountry(country) {
-        if (country) {
-            return country.trim();
-        } else if (!country) {
-            return ""
-        }
-    }
+    // function includesCountry(country) {
+    //     if (country) {
+    //         return country.trim();
+    //     } else if (!country) {
+    //         return ""
+    //     }
+    // }
 
-    function capitaliseCity(city) {
-        return (city[0].toUpperCase() + city.slice(1)).trim()
-    };
+    // function capitaliseCity(city) {
+    //     return (city[0].toUpperCase() + city.slice(1)).trim()
+    // };
 
     var cityObj = {
-        city: capitaliseCity(cityArr[0].trim()),
-        country: includesCountry(cityArr[1])
+        city: cityArr[0].trim(),
+        country: cityArr[1].trim()
     }
 
     return cityObj
@@ -57,7 +57,7 @@ function getAPIData(cityObj) {
             .then(function (currentDataObj) {
                 console.log(currentDataObj);
                 if (currentDataObj) {
-                    generateCurrent(currentDataObj, cityObj, iconURL);
+                    generateCurrent(currentDataObj, iconURL);
                     // call function to add to history here
                     addsToHistory(currentDataObj);
                     getForecast(currentDataObj);
@@ -76,7 +76,7 @@ function getAPIData(cityObj) {
     };
 };
 
-function generateCurrent(currentDataObj, cityObj, iconURL) {
+function generateCurrent(currentDataObj, iconURL) {
 
     var currentSection = $("#currentWeather")
 
@@ -113,7 +113,14 @@ function generateCurrent(currentDataObj, cityObj, iconURL) {
 </div>`;
     currentSection.html(currentHTML);
     currentSection.addClass("customBorder")
-}
+    $("#refreshBtn").click(function () {
+        var cityObj = {
+            city: currentDataObj.name,
+            country: currentDataObj.sys.country
+        }
+        getAPIData(cityObj)
+    });
+};
 
 function generateCarousel(forecastDataObj, iconURL) {
     var forecastSection = $("#fiveDayForecast")
