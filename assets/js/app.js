@@ -86,8 +86,8 @@ function generateCurrent(currentDataObj, iconURL) {
             <i class="fa-solid fa-location-arrow fs-6 text-center mb-2 mx-1"></i>
             <p id="currentCity">${currentDataObj.name} (${currentDataObj.sys.country})</p>
         </div>
-        <button class="col mt-2 p-1">
-        <i class="fa-solid fa-rotate hidden" id="refreshBtn"></i>
+        <button class="col mt-2 p-1 hidden">
+        <i class="fa-solid fa-rotate" id="refreshBtn"></i>
         </button>
     </div>
     <div class="row d-flex">
