@@ -150,7 +150,7 @@ function generateCarousel(forecastDataObj, iconURL) {
 
     $("#prev").click(function () {
         console.log("prev clicked");
-        $(".carousel").animate({"right": "-=400px"},"fast");
+        $(".carousel").animate({ "right": "-=400px" }, "fast");
         var right = $(".carousel").css("right");
         console.log(right);
         var width = $(".carousel").css("width");
@@ -158,7 +158,7 @@ function generateCarousel(forecastDataObj, iconURL) {
     });
     $("#next").click(function () {
         console.log("next clicked");
-        $(".carousel").animate({"right": "+=400px"},"fast");
+        $(".carousel").animate({ "right": "+=400px" }, "fast");
         var right = $(".carousel").css("right");
         console.log(right);
         var width = $(".carousel").css("width");
@@ -195,8 +195,18 @@ $("#search[type=text]").autocomplete({
 });
 
 $("#search[type=text]").focus(function () {
-    $("#search[type=text]").autocomplete( "search", "" );
+    $("#search[type=text]").autocomplete("search", "");
 });
 
 // maxRight = (21*slide)-carousel/2;
 // maxLeft = (-19*slide)+carousel/2;
+
+$("#clearBtn").click(function () {
+    setTimeout(function () {
+        var userConfirms = confirm("This will clear your search history and reload the page. Press cancel to go back\nAre you sure?")
+        if (userConfirms) {
+            localStorage.removeItem("citiesUserData");
+            location.reload();
+        };
+    }, 100);
+})
