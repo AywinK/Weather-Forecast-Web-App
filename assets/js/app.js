@@ -25,13 +25,13 @@ function getCityInput(cityVal) {
     //     cityArr[1] = "gb";
     // }
 
-    // function includesCountry(country) {
-    //     if (country) {
-    //         return country.trim();
-    //     } else if (!country) {
-    //         return ""
-    //     }
-    // }
+    function includesCountry(country) {
+        if (country) {
+            return country.trim();
+        } else if (!country) {
+            return ""
+        }
+    }
 
     // function capitaliseCity(city) {
     //     return (city[0].toUpperCase() + city.slice(1)).trim()
@@ -39,7 +39,7 @@ function getCityInput(cityVal) {
 
     var cityObj = {
         city: cityArr[0].trim(),
-        country: cityArr[1].trim()
+        country: includesCountry(cityArr[1])
     }
 
     return cityObj
@@ -79,7 +79,7 @@ function getAPIData(cityObj) {
 function generateCurrent(currentDataObj, iconURL) {
 
     var currentSection = $("#currentWeather")
-
+// HTML includes refresh button that is hidden so OpenWeather API is not spammed with requests
     var currentHTML = `<div class="container-fluid">
     <div class="row">
         <div class="col-10 d-flex my-1 align-items-center">
@@ -87,7 +87,7 @@ function generateCurrent(currentDataObj, iconURL) {
             <p id="currentCity">${currentDataObj.name} (${currentDataObj.sys.country})</p>
         </div>
         <button class="col mt-2 p-1">
-        <i class="fa-solid fa-rotate" id="refreshBtn"></i>
+        <i class="fa-solid fa-rotate hidden" id="refreshBtn"></i>
         </button>
     </div>
     <div class="row d-flex">
