@@ -72,3 +72,12 @@ img {
 #prev, #next {
     cursor: pointer;
 }
+
+.ui-autocomplete {
+    background-image: linear-gradient(#343434,#343434);   
+}
+
+.ui-menu-item .ui-menu-item-wrapper.ui-state-active{
+    background-image: linear-gradient(45deg, rgb(52,52,52), yellowgreen) !important;
+    color: #d6d6d6 !important;
+}
