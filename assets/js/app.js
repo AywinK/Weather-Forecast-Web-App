@@ -158,67 +158,77 @@ function generateCarousel(forecastDataObj, iconURL) {
     forecastSection.addClass("customBorder");
 
 
-    // carousel logic and initial positioning function call
+    // carousel logic and initial positioning function call return
+    function carouselLogic(e) {
+        var slideWidth = $(".slide").innerWidth();
+        var carouselWidth = $(".carousel").innerWidth();
+        var hiddenWidth = slideWidth * ($(".slide").length) - carouselWidth;
+        var maxRightPosition = hiddenWidth / 2 + slideWidth;
+        var maxLeftPosition = maxRightPosition - hiddenWidth;
+        var prevBtn = $("#prev");
+        var nextBtn = $("#next");
 
-    var slideWidth = $(".slide").innerWidth();
-    var carouselWidth = $(".carousel").innerWidth();
-    var hiddenWidth = slideWidth * ($(".slide").length) - carouselWidth;
-    var maxRightPosition = hiddenWidth / 2 + slideWidth;
-    var maxLeftPosition = maxRightPosition - hiddenWidth;
-    var prevBtn = $("#prev");
-    var nextBtn = $("#next");
+        console.log([slideWidth, carouselWidth, hiddenWidth, maxRightPosition, maxLeftPosition]);
 
-    console.log([slideWidth, carouselWidth, hiddenWidth, maxRightPosition, maxLeftPosition]);
-
-    // call to initial position during carousel generation
-    function resetCarouselPositionLeft() {
-        $(".carousel").animate({ "right": `${maxLeftPosition}px` }, "fast");
-        prevBtn.addClass("hidden");
-    };
-
-    resetCarouselPositionLeft();
-
-    function resetCarouselPositionRight() {
-        $(".carousel").animate({ "right": `${maxRightPosition}px` }, "fast");
-        nextBtn.addClass("hidden");
-    }
-
-    function currentPosition() {
-        function pxStr2Num(str) {
-            return parseFloat(str.split("p")[0])
+        function resetCarouselPositionLeft() {
+            $(".carousel").animate({ "right": `${maxLeftPosition}px` }, "fast");
+            prevBtn.addClass("hidden");
         };
 
-        return pxStr2Num($(".carousel").css("right"));
+        function resetCarouselPositionRight() {
+            $(".carousel").animate({ "right": `${maxRightPosition}px` }, "fast");
+            nextBtn.addClass("hidden");
+        }
+
+        function currentPosition() {
+            function pxStr2Num(str) {
+                return parseFloat(str.split("p")[0])
+            };
+
+            return pxStr2Num($(".carousel").css("right"));
+        }
+
+        function toPrev() {
+            var calculatedPosition = currentPosition() - carouselWidth;
+            var invalidPosition = (calculatedPosition <= maxLeftPosition);
+
+            if (invalidPosition) {
+                resetCarouselPositionLeft();
+            } else if (!invalidPosition) {
+                $(".carousel").animate({ "right": `${calculatedPosition + slideWidth}px` }, "fast");
+            } if (nextBtn.hasClass("hidden")) {
+                nextBtn.removeClass("hidden");
+            }
+        };
+
+        function toNext() {
+            var calculatedPosition = currentPosition() + carouselWidth;
+            var invalidPosition = (calculatedPosition >= maxRightPosition);
+
+            if (invalidPosition) {
+                resetCarouselPositionRight();
+            } else if (!invalidPosition) {
+                $(".carousel").animate({ "right": `${calculatedPosition - slideWidth}px` }, "fast");
+            } if (prevBtn.hasClass("hidden")) {
+                prevBtn.removeClass("hidden");
+            }
+        };
+
+        if (e) {
+            if ($(e.target).is("#prev")) {
+                toPrev();
+            } if ($(e.target).is("#next")) {
+                toNext();
+            }
+        }
+
+        return { resetCarouselPositionLeft: resetCarouselPositionLeft }
     }
 
-    function toPrev() {
-        var calculatedPosition = currentPosition() - carouselWidth;
-        var invalidPosition = (calculatedPosition <= maxLeftPosition);
+    $("#prev, #next").click(carouselLogic);
 
-        if (invalidPosition) {
-            resetCarouselPositionLeft();
-        } else if (!invalidPosition) {
-            $(".carousel").animate({ "right": `${calculatedPosition + slideWidth}px` }, "fast");
-        } if (nextBtn.hasClass("hidden")) {
-            nextBtn.removeClass("hidden");
-        }
-    };
-
-    function toNext() {
-        var calculatedPosition = currentPosition() + carouselWidth;
-        var invalidPosition = (calculatedPosition >= maxRightPosition);
-
-        if (invalidPosition) {
-            resetCarouselPositionRight();
-        } else if (!invalidPosition) {
-            $(".carousel").animate({ "right": `${calculatedPosition - slideWidth}px` }, "fast");
-        } if (prevBtn.hasClass("hidden")) {
-            prevBtn.removeClass("hidden");
-        }
-    };
-
-    $("#prev").click(toPrev);
-    $("#next").click(toNext);
+    // initial positioning of carousel
+    carouselLogic().resetCarouselPositionLeft();
 
 };
 function getsHistory() {
