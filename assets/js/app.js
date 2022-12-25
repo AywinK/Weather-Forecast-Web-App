@@ -145,10 +145,15 @@ function generateCarousel(forecastDataObj, iconURL) {
             <img src="${iconURL + forecastObj.weather[0].icon}.png" alt="${forecastObj.weather[0].description}">
             <div class="container">
                 <p class="square py-2 fs-4">${Math.round(forecastObj.main.temp)}&#176</p>
-                <p class="fs-5">${forecastObj.main.humidity}%</p>
+                <p class="fs-5 mt-1">${forecastObj.main.humidity}%</p>
+                <p class="d-flex justify-content-evenly">
+                    <i class="fa-solid fa-wind fs-6 pt-1"></i>
+                    <span>${Math.round(forecastObj.wind.speed)}</span>
+                </p>
             </div>
         </div>
-        `
+        `;
+
         carouselEl.append(slideHTML);
     };
 
