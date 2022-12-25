@@ -184,6 +184,10 @@ function generateCarousel(forecastDataObj, iconURL) {
     }
 
     function currentPosition() {
+        function pxStr2Num(str) {
+            return parseFloat(str.split("p")[0])
+        };
+
         return pxStr2Num($(".carousel").css("right"));
     }
 
