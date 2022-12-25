@@ -159,12 +159,9 @@ function generateCarousel(forecastDataObj, iconURL) {
 
 
     // carousel logic and initial positioning function call
-    function pxStr2Num(str) {
-        return parseFloat(str.split("p")[0])
-    }
 
-    var slideWidth = pxStr2Num($(".slide").css("width"));
-    var carouselWidth = pxStr2Num($(".carousel").css("width"));
+    var slideWidth = $(".slide").innerWidth();
+    var carouselWidth = $(".carousel").innerWidth();
     var hiddenWidth = slideWidth * ($(".slide").length) - carouselWidth;
     var maxRightPosition = hiddenWidth / 2 + slideWidth;
     var maxLeftPosition = maxRightPosition - hiddenWidth;
