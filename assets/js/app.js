@@ -197,7 +197,7 @@ function generateCarousel(forecastDataObj, iconURL) {
         if (invalidPosition) {
             resetCarouselPositionLeft();
         } else if (!invalidPosition) {
-            $(".carousel").animate({ "right": `${calculatedPosition}px` }, "fast");
+            $(".carousel").animate({ "right": `${calculatedPosition + slideWidth}px` }, "fast");
         } if (nextBtn.hasClass("hidden")) {
             nextBtn.removeClass("hidden");
         }
@@ -210,7 +210,7 @@ function generateCarousel(forecastDataObj, iconURL) {
         if (invalidPosition) {
             resetCarouselPositionRight();
         } else if (!invalidPosition) {
-            $(".carousel").animate({ "right": `${calculatedPosition}px` }, "fast");
+            $(".carousel").animate({ "right": `${calculatedPosition - slideWidth}px` }, "fast");
         } if (prevBtn.hasClass("hidden")) {
             prevBtn.removeClass("hidden");
         }
