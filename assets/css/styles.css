@@ -71,6 +71,8 @@ img {
 
 #prev, #next {
     cursor: pointer;
+    transform: scale(1.2);
+    transition-duration: 200ms;
 }
 
 .ui-autocomplete {
@@ -96,4 +98,10 @@ img {
 
 .hidden {
     visibility: hidden;
+}
+
+#prev:active, #next:active {
+    transform: scale(1.15);
+    /* transition-duration: 200ms; */
+    /* animation-direction: reverse; */
 }
