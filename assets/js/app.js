@@ -79,7 +79,7 @@ function getAPIData(cityObj) {
 function generateCurrent(currentDataObj, iconURL) {
 
     var currentSection = $("#currentWeather")
-// HTML includes refresh button that is hidden so OpenWeather API is not spammed with requests
+    // HTML includes refresh button that is hidden so OpenWeather API is not spammed with requests
     var currentHTML = `<div class="container-fluid">
     <div class="row">
         <div class="col-10 d-flex my-1 align-items-center">
@@ -113,6 +113,8 @@ function generateCurrent(currentDataObj, iconURL) {
 </div>`;
     currentSection.html(currentHTML);
     currentSection.addClass("customBorder")
+
+    // remove hidden class from current section HTML generation on refreshBtn to show btn on app
     $("#refreshBtn").click(function () {
         var cityObj = {
             city: currentDataObj.name,
@@ -155,24 +157,69 @@ function generateCarousel(forecastDataObj, iconURL) {
     };
     forecastSection.addClass("customBorder");
 
-    $("#prev").click(function () {
-        console.log("prev clicked");
-        $(".carousel").animate({ "right": "-=400px" }, "fast");
-        var right = $(".carousel").css("right");
-        console.log(right);
-        var width = $(".carousel").css("width");
-        console.log(`width: ${width}`);
-    });
-    $("#next").click(function () {
-        console.log("next clicked");
-        $(".carousel").animate({ "right": "+=400px" }, "fast");
-        var right = $(".carousel").css("right");
-        console.log(right);
-        var width = $(".carousel").css("width");
-        console.log(`width: ${$(".carousel").css("width")}`);
-    });
-};
 
+    // carousel logic and initial positioning function call
+    function pxStr2Num(str) {
+        return parseFloat(str.split("p")[0])
+    }
+
+    var slideWidth = pxStr2Num($(".slide").css("width"));
+    var carouselWidth = pxStr2Num($(".carousel").css("width"));
+    var hiddenWidth = slideWidth * ($(".slide").length) - carouselWidth;
+    var maxRightPosition = hiddenWidth / 2 + slideWidth;
+    var maxLeftPosition = maxRightPosition - hiddenWidth;
+    var prevBtn = $("#prev");
+    var nextBtn = $("#next");
+
+    console.log([slideWidth, carouselWidth, hiddenWidth, maxRightPosition, maxLeftPosition]);
+
+    // call to initial position during carousel generation
+    function resetCarouselPositionLeft() {
+        $(".carousel").animate({ "right": `${maxLeftPosition}px` }, "fast");
+        prevBtn.addClass("hidden");
+    };
+
+    resetCarouselPositionLeft();
+
+    function resetCarouselPositionRight() {
+        $(".carousel").animate({ "right": `${maxRightPosition}px` }, "fast");
+        nextBtn.addClass("hidden");
+    }
+
+    function currentPosition() {
+        return pxStr2Num($(".carousel").css("right"));
+    }
+
+    function toPrev() {
+        var calculatedPosition = currentPosition() - carouselWidth;
+        var invalidPosition = (calculatedPosition <= maxLeftPosition);
+
+        if (invalidPosition) {
+            resetCarouselPositionLeft();
+        } else if (!invalidPosition) {
+            $(".carousel").animate({ "right": `${calculatedPosition}px` }, "fast");
+        } if (nextBtn.hasClass("hidden")) {
+            nextBtn.removeClass("hidden");
+        }
+    };
+
+    function toNext() {
+        var calculatedPosition = currentPosition() + carouselWidth;
+        var invalidPosition = (calculatedPosition >= maxRightPosition);
+
+        if (invalidPosition) {
+            resetCarouselPositionRight();
+        } else if (!invalidPosition) {
+            $(".carousel").animate({ "right": `${calculatedPosition}px` }, "fast");
+        } if (prevBtn.hasClass("hidden")) {
+            prevBtn.removeClass("hidden");
+        }
+    };
+
+    $("#prev").click(toPrev);
+    $("#next").click(toNext);
+
+};
 function getsHistory() {
     return JSON.parse(localStorage.getItem("citiesUserData")) || [];
 };
@@ -210,7 +257,7 @@ $("#search[type=text]").focus(function () {
 
 $("#clearBtn").click(function () {
     setTimeout(function () {
-        var userConfirms = confirm("This will clear your search history and reload the page. Press cancel to go back\nAre you sure?")
+        var userConfirms = confirm("This will clear your search history and reload the page. Press cancel to go back.\nAre you sure?")
         if (userConfirms) {
             localStorage.removeItem("citiesUserData");
             location.reload();
