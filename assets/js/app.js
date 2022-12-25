@@ -236,13 +236,13 @@ function addsToHistory(currentDataObj) {
         citiesUserData.push(newValidInput);
         savesHistory(citiesUserData);
         $("#search[type=text]").autocomplete({
-            source: getsHistory(),
+            source: getsHistory().reverse(),
         });
     }
 };
 
 $("#search[type=text]").autocomplete({
-    source: getsHistory(),
+    source: getsHistory().reverse(),
 
 }, {
     minLength: 0,
