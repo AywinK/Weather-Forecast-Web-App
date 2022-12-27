@@ -8,7 +8,6 @@ function getsSearchVal(e) {
     e.preventDefault();
     var userInput = $("input[type=text]");
     var cityVal = userInput.val();
-    console.log(cityVal);
     userInput.val(``);
     if (cityVal) {
         getAPIData(getCityInput(cityVal));
@@ -17,13 +16,8 @@ function getsSearchVal(e) {
 };
 
 // filter out city and country
-
 function getCityInput(cityVal) {
     var cityArr = cityVal.split(",");
-    console.log(cityArr);
-    // if (!cityArr[1]) {
-    //     cityArr[1] = "gb";
-    // }
 
     function includesCountry(country) {
         if (country) {
@@ -32,10 +26,6 @@ function getCityInput(cityVal) {
             return ""
         }
     }
-
-    // function capitaliseCity(city) {
-    //     return (city[0].toUpperCase() + city.slice(1)).trim()
-    // };
 
     var cityObj = {
         city: cityArr[0].trim(),
@@ -52,23 +42,23 @@ function getAPIData(cityObj) {
     var iconURL = "https://openweathermap.org/img/w/";
     var cityObj = cityObj;
 
-    (function inputsubmitted() {
-        $.get(currentURL + `&q=${cityObj.city},${cityObj.country}`)
-            .then(function (currentDataObj) {
-                console.log(currentDataObj);
-                if (currentDataObj) {
-                    generateCurrent(currentDataObj, iconURL);
-                    // call function to add to history here
-                    addsToHistory(currentDataObj);
-                    getForecast(currentDataObj);
-                }
-            })
-    }());
+    $.get(currentURL + `&q=${cityObj.city},${cityObj.country}`)
+        .then(function (currentDataObj) {
+            if (currentDataObj) {
+                generateCurrent(currentDataObj, iconURL);
+                // call function to add to history here
+                addsToHistory(currentDataObj);
+                getForecast(currentDataObj);
+            }
+        })
+        .fail(function() {
+            alert("Unable to find city.");
+        });
 
+    // function called after server responds with valid object
     function getForecast(currentDataObj) {
         $.get(forecastURL + `&lat=${currentDataObj.coord.lat}&lon=${currentDataObj.coord.lon}`)
             .then(function (forecastDataObj) {
-                console.log(forecastDataObj);
                 if (forecastDataObj) {
                     generateCarousel(forecastDataObj, iconURL);
                 }
@@ -173,8 +163,6 @@ function generateCarousel(forecastDataObj, iconURL) {
         var prevBtn = $("#prev");
         var nextBtn = $("#next");
 
-        console.log([slideWidth, carouselWidth, hiddenWidth, maxRightPosition, maxLeftPosition]);
-
         function resetCarouselPositionLeft() {
             $(".carousel").animate({ "right": `${maxLeftPosition}px` }, "fast");
             prevBtn.addClass("hidden");
@@ -236,6 +224,7 @@ function generateCarousel(forecastDataObj, iconURL) {
     carouselLogic().resetCarouselPositionLeft();
 
 };
+
 function getsHistory() {
     return JSON.parse(localStorage.getItem("citiesUserData")) || [];
 };
@@ -255,7 +244,7 @@ function addsToHistory(currentDataObj) {
         });
     }
 };
-
+// ===================================================================================
 $("#search[type=text]").autocomplete({
     source: getsHistory().reverse(),
 
@@ -267,9 +256,6 @@ $("#search[type=text]").autocomplete({
 $("#search[type=text]").focus(function () {
     $("#search[type=text]").autocomplete("search", "");
 });
-
-// maxRight = (21*slide)-carousel/2;
-// maxLeft = (-19*slide)+carousel/2;
 
 $("#clearBtn").click(function () {
     setTimeout(function () {

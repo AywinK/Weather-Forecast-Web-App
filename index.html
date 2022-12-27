@@ -16,8 +16,10 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <title>Weather Dashboard</title>
 </head>
+<!-- body max. size with BStrap container -->
 
 <body class="container-lg">
+    <!-- header contains logo icon, h1 title, clear history button -->
     <header class="d-flex justify-content-between p-0 align-items-center mx-auto my-2">
         <i class="fa-solid fa-cloud-moon px-3 fs-1"></i>
         <h1 class="text-center"> Weather Forecast</h1>
@@ -25,9 +27,11 @@
             <i class="fa-solid fa-trash fs-3"></i>
         </button>
     </header>
-
+    <!-- main contains the form section and base container structure and styling for current weather and 5 day forecast -->
     <main class="container">
+
         <div class="row justify-content-center">
+            <!-- search section -->
             <form class="col-12 col-md-6 d-flex flex-column p-2 align-items-center text-center searchContainer"
                 id="searchContainer">
                 <label for="search" class="fs-2 my-1 search">Search for a City:</label>
@@ -36,17 +40,19 @@
                 <input type="submit" class="form-control form-control-md my-1 search" name="search" id="search"
                     value="Search">
             </form>
-
+            <!-- current weather sectino -->
             <section
                 class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center mt-1 fs-4 currentWeather"
                 id="currentWeather"></section>
+            <!-- five day forecast carousel -->
+            <section class="col-12 container-fluid fiveDayForecast my-3 pt-3 overflow-hidden" id="fiveDayForecast">
+            </section>
 
-            <section 
-            class="col-12 container-fluid fiveDayForecast my-3 pt-3 overflow-hidden" id="fiveDayForecast">
-        </section>
     </main>
-
-    <footer class="text-center"><i><strong>Powered by OpenWeather API</strong></i></footer>
+    <!-- footer contains credits to weather API -->
+    <footer class="text-center">
+        <i><strong>Powered by OpenWeather API</strong></i>
+    </footer>
 
     <!-- Bootstrap v5.2 js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
