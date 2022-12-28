@@ -1,14 +1,29 @@
 // ===========================================GLOBAL FUNCTIONS===================================================================
 
-// gets user input value
+// gets user input on selection from autocomplete after autocomplete closes (default JQuery behaviour) | ui parameter is just an empty placeholder
+function onAutocompleteClose(event, ui) {
+    if (event.currentTarget) {
+        var currentSection = $("#currentWeather");
+        var forecastSection = $("#fiveDayForecast");
+        currentSection.html(``);
+        forecastSection.html(``);
+        getsSearchVal();
+    }
+}
+// gets user input value from search text field
 function getsSearchVal(e) {
-    e.preventDefault();
+    // if from submit action
+    if (e) {
+        e.preventDefault();
+    };
+
     var userInput = $("input[type=text]");
     var cityVal = userInput.val();
     userInput.val(``);
     if (cityVal) {
         getAPIData(getCityInput(cityVal));
     };
+    $(':focus').blur();
 
 };
 
@@ -260,7 +275,8 @@ $("#searchContainer").submit(getsSearchVal);
 var searchTextBoxEl = $("#search[type=text]");
 
 searchTextBoxEl.autocomplete({
-    source: getsHistory().reverse()
+    source: getsHistory().reverse(),
+    close: onAutocompleteClose
 }, {
     minLength: 0,
     delay: 0
