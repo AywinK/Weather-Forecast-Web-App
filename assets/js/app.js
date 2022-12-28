@@ -1,9 +1,6 @@
+// ===========================================GLOBAL FUNCTIONS===================================================================
 
-// get value from search
-var submitBtn = $("#searchContainer");
-
-submitBtn.submit(getsSearchVal);
-
+// gets user input value
 function getsSearchVal(e) {
     e.preventDefault();
     var userInput = $("input[type=text]");
@@ -15,7 +12,7 @@ function getsSearchVal(e) {
 
 };
 
-// filter out city and country
+// filter out city and country (tidies up input)
 function getCityInput(cityVal) {
     var cityArr = cityVal.split(",");
 
@@ -35,6 +32,7 @@ function getCityInput(cityVal) {
     return cityObj
 };
 
+// gets data from API based on user input, and calls functions to add data to webpage and also save to history
 function getAPIData(cityObj) {
     var baseURL = "https://api.openweathermap.org/data/2.5/";
     var currentURL = baseURL + `weather?appid=${apiKey}&units=metric`;
@@ -51,7 +49,7 @@ function getAPIData(cityObj) {
                 getForecast(currentDataObj);
             }
         })
-        .fail(function() {
+        .fail(function () {
             alert("Unable to find city.");
         });
 
@@ -66,6 +64,7 @@ function getAPIData(cityObj) {
     };
 };
 
+// creates section with current weather. includes refresh button event listener - currently hidden
 function generateCurrent(currentDataObj, iconURL) {
 
     var currentSection = $("#currentWeather")
@@ -101,8 +100,9 @@ function generateCurrent(currentDataObj, iconURL) {
         </div>
     </div>
 </div>`;
+
     currentSection.html(currentHTML);
-    currentSection.addClass("customBorder")
+    currentSection.addClass("customBorder") //styling
 
     // remove hidden class from current section HTML generation on refreshBtn to show btn on app
     $("#refreshBtn").click(function () {
@@ -114,6 +114,7 @@ function generateCurrent(currentDataObj, iconURL) {
     });
 };
 
+// generates five day forecast section
 function generateCarousel(forecastDataObj, iconURL) {
     var forecastSection = $("#fiveDayForecast")
     var carouselHTML = `            
@@ -127,6 +128,7 @@ function generateCarousel(forecastDataObj, iconURL) {
     `
     forecastSection.html(carouselHTML);
 
+    // generates individual slides for each data point
     function generateSlide(forecastObj) {
         var carouselEl = $("#carousel");
         var slideHTML = `
@@ -150,7 +152,8 @@ function generateCarousel(forecastDataObj, iconURL) {
     for (var forecastObj of forecastDataObj.list) {
         generateSlide(forecastObj);
     };
-    forecastSection.addClass("customBorder");
+
+    forecastSection.addClass("customBorder"); // styling
 
 
     // carousel logic and initial positioning function call return
@@ -225,14 +228,17 @@ function generateCarousel(forecastDataObj, iconURL) {
 
 };
 
+// gets history from local storage
 function getsHistory() {
     return JSON.parse(localStorage.getItem("citiesUserData")) || [];
 };
 
+// saves history to local storage
 function savesHistory(arr) {
     localStorage.setItem("citiesUserData", JSON.stringify(arr));
 };
 
+// adds valid search term to history array
 function addsToHistory(currentDataObj) {
     var citiesUserData = getsHistory();
     var newValidInput = currentDataObj.name + ", " + currentDataObj.sys.country;
@@ -244,19 +250,27 @@ function addsToHistory(currentDataObj) {
         });
     }
 };
-// ===================================================================================
-$("#search[type=text]").autocomplete({
-    source: getsHistory().reverse(),
 
+// ===========================================EVENT LISTENERS/METHODS ON PAGE LOAD===================================================================
+
+// gets value from form submit
+$("#searchContainer").submit(getsSearchVal);
+
+// adds initial autocomplete jquery UI including opening dropdown on textbox focus 
+var searchTextBoxEl = $("#search[type=text]");
+
+searchTextBoxEl.autocomplete({
+    source: getsHistory().reverse()
 }, {
     minLength: 0,
     delay: 0
 });
 
-$("#search[type=text]").focus(function () {
-    $("#search[type=text]").autocomplete("search", "");
+searchTextBoxEl.focus(function () {
+    searchTextBoxEl.autocomplete("search", "");
 });
 
+// clears stored history data
 $("#clearBtn").click(function () {
     setTimeout(function () {
         var userConfirms = confirm("This will clear your search history and reload the page. Press cancel to go back.\nAre you sure?")
