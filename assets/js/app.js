@@ -4,10 +4,10 @@
 (function () {
     // gets value from form submit
     $("#searchContainer").submit(getsSearchVal);
-    
+
     // adds initial autocomplete jquery UI including opening dropdown on textbox focus 
     var searchTextBoxEl = $("#search[type=text]");
-    
+
     searchTextBoxEl.autocomplete({
         source: getsHistory().reverse(),
         close: onAutocompleteClose
@@ -15,11 +15,11 @@
         minLength: 0,
         delay: 0
     });
-    
+
     searchTextBoxEl.focus(function () {
         searchTextBoxEl.autocomplete("search", "");
     });
-    
+
     // clears stored history data
     $("#clearBtn").click(function () {
         setTimeout(function () {
@@ -30,7 +30,7 @@
             };
         }, 100);
     })
-    }());
+}());
 
 // gets user input on selection from autocomplete after autocomplete closes (default JQuery behaviour) | ui parameter is just an empty placeholder
 function onAutocompleteClose(event, ui) {
@@ -81,6 +81,9 @@ function getCityInput(cityVal) {
 
 // gets data from API based on user input, and calls functions to add data to webpage and also save to history
 function getAPIData(cityObj) {
+    // open weather api key
+    var apiKey = "81500078676f3d040d57121bce198452";
+    
     var baseURL = "https://api.openweathermap.org/data/2.5/";
     var currentURL = baseURL + `weather?appid=${apiKey}&units=metric`;
     var forecastURL = baseURL + `forecast?appid=${apiKey}&units=metric`;
