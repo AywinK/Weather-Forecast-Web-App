@@ -1,5 +1,37 @@
 // ===========================================GLOBAL FUNCTIONS===================================================================
 
+// initialises form and clear button on page load IIFE
+(function () {
+    // gets value from form submit
+    $("#searchContainer").submit(getsSearchVal);
+    
+    // adds initial autocomplete jquery UI including opening dropdown on textbox focus 
+    var searchTextBoxEl = $("#search[type=text]");
+    
+    searchTextBoxEl.autocomplete({
+        source: getsHistory().reverse(),
+        close: onAutocompleteClose
+    }, {
+        minLength: 0,
+        delay: 0
+    });
+    
+    searchTextBoxEl.focus(function () {
+        searchTextBoxEl.autocomplete("search", "");
+    });
+    
+    // clears stored history data
+    $("#clearBtn").click(function () {
+        setTimeout(function () {
+            var userConfirms = confirm("This will clear your search history and reload the page. Press cancel to go back.\nAre you sure?")
+            if (userConfirms) {
+                localStorage.removeItem("citiesUserData");
+                location.reload();
+            };
+        }, 100);
+    })
+    }());
+
 // gets user input on selection from autocomplete after autocomplete closes (default JQuery behaviour) | ui parameter is just an empty placeholder
 function onAutocompleteClose(event, ui) {
     if (event.currentTarget) {
@@ -265,34 +297,3 @@ function addsToHistory(currentDataObj) {
         });
     }
 };
-
-// ===========================================EVENT LISTENERS/METHODS ON PAGE LOAD===================================================================
-
-// gets value from form submit
-$("#searchContainer").submit(getsSearchVal);
-
-// adds initial autocomplete jquery UI including opening dropdown on textbox focus 
-var searchTextBoxEl = $("#search[type=text]");
-
-searchTextBoxEl.autocomplete({
-    source: getsHistory().reverse(),
-    close: onAutocompleteClose
-}, {
-    minLength: 0,
-    delay: 0
-});
-
-searchTextBoxEl.focus(function () {
-    searchTextBoxEl.autocomplete("search", "");
-});
-
-// clears stored history data
-$("#clearBtn").click(function () {
-    setTimeout(function () {
-        var userConfirms = confirm("This will clear your search history and reload the page. Press cancel to go back.\nAre you sure?")
-        if (userConfirms) {
-            localStorage.removeItem("citiesUserData");
-            location.reload();
-        };
-    }, 100);
-})
