@@ -19,7 +19,7 @@ Search for the weather forecast using the search box. Specify the country code (
 The user is able to scroll through the five day forecast using the buttons found at the bottom. The buttons disappear to indicate when the user has scrolled to the beginning or the end.
 
 ### Development
-Files  are named appropriately and placed in a logically structured folder layout. The codebase includes comments and appropriately named expressions, so that the code is easy to understand. The JavaScript file only contains functions with no variables in the global scope that could interfere with future development.
+Files  are named appropriately and placed in a logically structured folder layout. The codebase includes comments and appropriately named expressions, so that the code is easy to understand. The JavaScript file only contains functions with no variables in the global scope that could interfere with future development. The app.js file also includes logic for a custom carousel component.
 
 The initial layout of the webpage consists of the header, search form, and footer. Containers for the current weather and five-day forecast sections are also included in the layout; however, the containers are initially hidden using CSS.
 
